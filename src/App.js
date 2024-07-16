@@ -1,7 +1,15 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 function App() {
 
+  /*when component first renders, React calls 
+  this function that's passed to the useState
+  to determine the initial state value.
+  The value associated with the key "first name"
+  is returned as the state value for firstName
+  Function is assigned to state variable instead
+  of empty string*/
   const [firstName, setFirstName] = useState(() => {
     return localStorage.getItem("first name")
   });
@@ -21,11 +29,21 @@ function App() {
   console.log("email:", email)
 
 
-
-  localStorage.setItem("first name", firstName);
-  localStorage.setItem("last name", lastName);
-  localStorage.setItem("age", age)
-  localStorage.setItem("email", email)
+  /*because setItem is in useEffect it 
+  will only be called when when the state variable
+  changes and not on every render */
+  useEffect(() => {
+    localStorage.setItem("first name", firstName);
+  }, [firstName]);
+  useEffect(() => {
+    localStorage.setItem("last name", lastName);
+  }, [lastName]);
+  useEffect(() => {
+    localStorage.setItem("age", age)
+  }, [age]);
+  useEffect(() => {
+    localStorage.setItem("email", email)
+  }, [email]);
 
   return (
     <>
@@ -42,8 +60,8 @@ function App() {
         <div>
           <label>Last Name: </label>
           <input
-            value={lastName}
             type="text"
+            value={lastName}
             onChange={e => setLastName(e.target.value)}
           />
         </div>
@@ -51,8 +69,8 @@ function App() {
         <div>
           <label>Age: </label>
           <input
-            value={age}
             type="text"
+            value={age}
             onChange={e => setAge(e.target.value)}
           />
         </div>
@@ -60,8 +78,8 @@ function App() {
         <div>
           <label>Email Address: </label>
           <input
-            value={email}
             type="email"
+            value={email}
             onChange={e => setEmail(e.target.value)}
           />
         </div>
