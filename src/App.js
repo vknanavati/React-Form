@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import "./index.css"
 
 function App() {
 
-  /*when component first renders, React calls 
+  /*when component first renders, React calls
   this function that's passed to the useState
   to determine the initial state value.
   The value associated with the key "first name"
@@ -11,7 +12,7 @@ function App() {
   Function is assigned to state variable instead
   of empty string*/
   const [firstName, setFirstName] = useState(() => {
-    return localStorage.getItem("first name")
+    return localStorage.getItem("first name") ;
   });
   const [lastName, setLastName] = useState(() => {
     return localStorage.getItem("last name")
@@ -23,31 +24,41 @@ function App() {
     return localStorage.getItem("email")
   });
 
+  const [displayName, setDisplayName] = useState("")
+  const [displayLast, setDisplayLast] = useState("")
+  const [displayAge, setDisplayAge] = useState("")
+  const [displayEmail, setDisplayEmail] = useState("")
+
   console.log("first name:", firstName)
   console.log("last name:", lastName)
   console.log("age:", age)
   console.log("email:", email)
 
-
-  /*because setItem is in useEffect it 
+  /*because setItem is in useEffect it
   will only be called when when the state variable
   changes and not on every render */
   useEffect(() => {
     localStorage.setItem("first name", firstName);
-  }, [firstName]);
-  useEffect(() => {
     localStorage.setItem("last name", lastName);
-  }, [lastName]);
-  useEffect(() => {
-    localStorage.setItem("age", age)
-  }, [age]);
-  useEffect(() => {
-    localStorage.setItem("email", email)
-  }, [email]);
+    localStorage.setItem("age", age);
+    localStorage.setItem("email", email);
+  }, [firstName, lastName, age, email]);
 
+  const handleClick = e => {
+    e.preventDefault();
+    setDisplayName(firstName);
+    setFirstName("");
+    setDisplayLast(lastName);
+    setLastName("");
+    setDisplayAge(age);
+    setAge("");
+    setDisplayEmail(email);
+    setEmail("");
+
+  }
   return (
-    <>
-      <h2>Information</h2>
+    <div className="body">``
+     <h2>Information</h2>
       <form>
         <div>
           <label>First Name: </label>
@@ -84,9 +95,15 @@ function App() {
           />
         </div>
 
-        <button>Submit</button>
+        <button
+        onClick={e => handleClick(e)}
+        >Submit</button>
       </form>
-    </>
+      {displayName && <p>{displayName}</p>}
+      {displayLast && <p>{displayLast}</p>}
+      {displayAge && <p>{displayAge}</p>}
+      {displayEmail && <p>{displayEmail}</p>}
+    </div>
   );
 }
 
