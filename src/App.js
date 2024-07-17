@@ -57,7 +57,7 @@ function App() {
 
   }
   return (
-    <div className="body">``
+    <div className="body">
      <h2>Information</h2>
       <form>
         <div>
