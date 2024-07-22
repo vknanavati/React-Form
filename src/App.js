@@ -45,8 +45,13 @@ function App() {
     localStorage.setItem("email", email);
   }, [firstName, lastName, age, email]);
 
-  // useEffect switch disable button on/off
-  // check if every input in NOT empty
+  useEffect(()=>{
+    if (firstName && lastName && age && email){
+      setDisableBtn(false)
+    } else {
+      setDisableBtn(true)
+    }
+  },[firstName, lastName, age, email])
 
   const handleClick = e => {
     e.preventDefault();
@@ -120,7 +125,7 @@ function App() {
             size="large"
             type="submit"
             onClick={e => handleClick(e)}
-            // disabled={disabledBtn}
+            disabled = {disableBtn}
             >
             Submit
             </Button>
