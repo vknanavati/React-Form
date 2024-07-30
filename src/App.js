@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Button, TextField, Grid, Paper, Typography } from '@mui/material';
+import { Box, Container, Button, TextField, Grid, Paper, Typography } from '@mui/material';
 import "./App.css"
 
 
@@ -189,10 +189,15 @@ function App() {
         </Grid> */}
       </Grid>
       </Paper>
-        {displayName && <p>{displayName}</p>}
-        {displayLast && <p>{displayLast}</p>}
-        {displayAge && <p>{displayAge}</p>}
-        {displayEmail && <p>{displayEmail}</p>}
+      <Box
+        textAlign={"center"}
+        marginTop={5}
+      >
+        {(displayName && !firstNameError) && <Typography fontSize={"3rem"}>{displayName}</Typography>}
+        {(displayLast && !lastNameError) && <Typography fontSize={"3rem"}>{displayLast}</Typography>}
+        {(displayAge && !ageError) && <Typography fontSize={"3rem"}>{displayAge}</Typography>}
+        {(displayEmail && !emailError) && <Typography fontSize={"3rem"}>{displayEmail}</Typography>}
+      </Box>
     </Container>
   );
 }
