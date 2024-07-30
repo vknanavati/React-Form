@@ -11,7 +11,11 @@ function App() {
   The value associated with the key "first name"
   is returned as the state value for firstName
   Function is assigned to state variable instead
-  of empty string*/
+  of empty string
+  When page refreshed, getItem will display
+  value for useState in TextField if there
+  was input
+  */
   const [firstName, setFirstName] = useState(() => {
     return localStorage.getItem("first name") || "";
   });
@@ -58,7 +62,7 @@ function App() {
     }
   },[firstName, lastName, age, email])
 
-  const handleClick = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     setDisplayName(firstName);
     setFirstName("");
@@ -166,7 +170,7 @@ function App() {
               variant="contained"
               size="large"
               type="submit"
-              onClick={e => handleClick(e)}
+              onClick={e => handleSubmit(e)}
               disabled = {disableBtn}
             >
               Submit
