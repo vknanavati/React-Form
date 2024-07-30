@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Button, TextField, Grid, Paper, Typography } from '@mui/material';
+import "./App.css"
 
 
 function App() {
@@ -29,6 +30,10 @@ function App() {
   const [displayAge, setDisplayAge] = useState("")
   const [displayEmail, setDisplayEmail] = useState("")
   const [disableBtn, setDisableBtn] = useState(true)
+  const [firstNameError, setFirstNameError] = useState(false)
+  const [lastNameError, setLastNameError] = useState(false)
+  const [ageError, setAgeError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
 
   console.log("first name:", firstName)
   console.log("last name:", lastName)
@@ -64,6 +69,35 @@ function App() {
     setDisplayEmail(email);
     setEmail("");
 
+    const nameRegex =  /^[A-Za-z]+$/;
+
+    if (!nameRegex.test(firstName)) {
+      setFirstNameError(true)
+    } else {
+      setFirstNameError(false)
+    }
+
+    if (!nameRegex.test(lastName)) {
+      setLastNameError(true)
+    } else {
+      setLastNameError(false)
+    }
+
+    const numberRegex =  /^-?\d+$/;
+
+    if (!numberRegex.test(age)) {
+      setAgeError(true)
+    } else {
+      setAgeError(false)
+    }
+
+    const emailRegex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+    if (!emailRegex.test(email)) {
+      setEmailError("Invalid email")
+    } else {
+      setEmailError("")
+    }
   }
   return (
     <Container>
@@ -87,17 +121,21 @@ function App() {
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
                 fullWidth
+                error={firstNameError}
+                helperText={firstNameError && "letters only"}
                 />
             </Grid>
             <Grid sx={{ marginBottom: 2 }} item xs={12}>
-            <TextField
-              label={<Typography variant="h6">Last Name</Typography>}
-              variant="outlined"
-              type="text"
-              value={lastName}
-              onChange={e => setLastName(e.target.value)}
-              fullWidth
-            />
+              <TextField
+                label={<Typography variant="h6">Last Name</Typography>}
+                variant="outlined"
+                type="text"
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                fullWidth
+                error={lastNameError}
+                helperText={lastNameError && "letters only"}
+                />
             </Grid>
             <Grid sx={{ marginBottom: 2 }} item xs={12}>
               <TextField
@@ -107,6 +145,8 @@ function App() {
                 value={age}
                 onChange={e => setAge(e.target.value)}
                 fullWidth
+                error={ageError}
+                helperText={ageError && "numbers only"}
               />
             </Grid>
             <Grid sx={{ marginBottom: 2 }} item xs={12}>
@@ -117,20 +157,36 @@ function App() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 fullWidth
+                error={emailError}
+                helperText={emailError && "invalid email"}
               />
           </Grid>
-          <Grid sx={{ marginBottom: 2 }} item xs={12} container justifyContent={"center"} >
+          <Grid sx={{ marginBottom: 2 }} item xs={12} container justifyContent={"center"}>
             <Button
-            variant="contained"
-            size="large"
-            type="submit"
-            onClick={e => handleClick(e)}
-            disabled = {disableBtn}
+              variant="contained"
+              size="large"
+              type="submit"
+              onClick={e => handleClick(e)}
+              disabled = {disableBtn}
             >
-            Submit
+              Submit
             </Button>
           </Grid>
         </form>
+        {/* <Grid item>
+          <Grid>
+            {firstNameError && <Typography color={"red"} fontSize={25} margin={1}>{firstNameError} </Typography>}
+          </Grid>
+          <Grid>
+            {lastNameError && <Typography color={"red"} fontSize={25} margin={1}>{lastNameError} </Typography>}
+          </Grid>
+          <Grid>
+            {ageError && <Typography color={"red"} fontSize={25} margin={1}>{ageError} </Typography>}
+          </Grid>
+          <Grid>
+            {emailError && <Typography color={"red"} fontSize={25} margin={1}>{emailError} </Typography>}
+          </Grid>
+        </Grid> */}
       </Grid>
       </Paper>
         {displayName && <p>{displayName}</p>}
