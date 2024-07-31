@@ -177,31 +177,18 @@ function App() {
             </Button>
           </Grid>
         </form>
-        {/* <Grid item>
-          <Grid>
-            {firstNameError && <Typography color={"red"} fontSize={25} margin={1}>{firstNameError} </Typography>}
-          </Grid>
-          <Grid>
-            {lastNameError && <Typography color={"red"} fontSize={25} margin={1}>{lastNameError} </Typography>}
-          </Grid>
-          <Grid>
-            {ageError && <Typography color={"red"} fontSize={25} margin={1}>{ageError} </Typography>}
-          </Grid>
-          <Grid>
-            {emailError && <Typography color={"red"} fontSize={25} margin={1}>{emailError} </Typography>}
-          </Grid>
-        </Grid> */}
       </Grid>
       </Paper>
-      <Box
+      {(!firstNameError && !lastNameError && !ageError && !emailError) && <Box
         textAlign={"center"}
         marginTop={5}
       >
-        {(displayName && !firstNameError) && <Typography fontSize={"3rem"}>{displayName}</Typography>}
-        {(displayLast && !lastNameError) && <Typography fontSize={"3rem"}>{displayLast}</Typography>}
-        {(displayAge && !ageError) && <Typography fontSize={"3rem"}>{displayAge}</Typography>}
-        {(displayEmail && !emailError) && <Typography fontSize={"3rem"}>{displayEmail}</Typography>}
-      </Box>
+        {displayName && <Typography fontSize={"3rem"}>{displayName}</Typography>}
+        {displayLast && <Typography fontSize={"3rem"}>{displayLast}</Typography>}
+        {displayAge  && <Typography fontSize={"3rem"}>{displayAge}</Typography>}
+        {displayEmail && <Typography fontSize={"3rem"}>{displayEmail}</Typography>}
+      </Box>}
+
     </Container>
   );
 }
